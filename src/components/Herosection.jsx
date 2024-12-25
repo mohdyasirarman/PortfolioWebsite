@@ -21,12 +21,14 @@ const Herosection = () => {
   return (
     <div className="relative h-screen w-full bg-[#151515] font-drukwide overflow-hidden z-10">
       <CanvasDesign gapOfStroke={gapOfStroke} />
-      <div className=" flex  flex-col justify-center font-poppins   items-center absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2  h-[70%] w-[70%]">
-           <div className="text-white/80 text-[20px]">{`HELLO I'M`}</div>
-           <div className="bg-gradient-to-r from-[#dc143c]  to-[#a80f2e] inline-block text-transparent bg-clip-text text-[70px] font-bold">{`SOFTWARE DEVELOPER`}</div>
-           <p className="text-center text-white/80 ">{`Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores saepe dolor similique officiis eligendi nisi ipsam asperiores est hic. Quod.`}</p>
+      <div className="flex flex-col justify-center font-poppins items-center absolute inset-0">
+        <div className="text-white/80 text-[16px] sm:text-[20px]">{`HELLO I'M`}</div>
+        <div className="bg-gradient-to-r from-[#dc143c] to-[#a80f2e] text-center inline-block text-transparent bg-clip-text text-[30px] sm:text-[60px] lg:text-[70px] font-bold">{`SOFTWARE DEVELOPER`}</div>
+        <p className="text-center mb-10 mt-2 text-white/80 text-[15px] px-10  sm:text-[16px] lg:text-[18px]">{`Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores saepe dolor similique officiis eligendi nisi ipsam asperiores est hic. Quod.`}</p>
       </div>
+    
     </div>
+   
   );
 };
 
