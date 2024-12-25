@@ -18,7 +18,7 @@ const CanvasDesign = ({ gapOfStroke }) => {
 
     const drawGrid = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const curveFactor = 7;
+      const curveFactor = 8;
 
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
@@ -26,7 +26,7 @@ const CanvasDesign = ({ gapOfStroke }) => {
       for (let i = 0; i <= canvas.width; i += gapOfStroke) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
-        for (let y = 0; y <= canvas.height; y += 20) {
+        for (let y = 0; y <= canvas.height; y += 5) {
           const x =
             i +
             Math.sin((y / canvas.height) * 2 * Math.PI + offset) * curveFactor;
@@ -42,7 +42,7 @@ const CanvasDesign = ({ gapOfStroke }) => {
       for (let j = 0; j <= canvas.height; j += gapOfStroke) {
         ctx.beginPath();
         ctx.moveTo(0, j);
-        for (let x = 0; x <= canvas.width; x += 20) {
+        for (let x = 0; x <= canvas.width; x += 5) {
           const y =
             j +
             Math.sin((x / canvas.width) * 2 * Math.PI + offset) * curveFactor;
@@ -55,7 +55,7 @@ const CanvasDesign = ({ gapOfStroke }) => {
         ctx.stroke();
       }
 
-      offset += 0.001;
+      offset += 0.002;
       animationRef.current = requestAnimationFrame(drawGrid);
     };
 
