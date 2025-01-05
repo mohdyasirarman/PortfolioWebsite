@@ -50,3 +50,7 @@
     font-weight: 900;
 }
 
+::selection {
+    color: rgb(255, 255, 255);
+}
+

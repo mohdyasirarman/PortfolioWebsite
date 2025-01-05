@@ -1,124 +1,128 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { FaHome } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa6";
-import { RiContactsFill } from "react-icons/ri";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
+import { FaHome, FaUser, FaCode, FaBrain, FaEnvelope, FaBars, FaTimes } from "react-icons/fa";
 
-const IconButton = ({ Icon, onClick }) => (
-  <li className="flex gap-1 items-center">
-    <motion.button
-      onClick={onClick}
-      className="flex items-center"
-      whileHover={{ scale: 1.2, color: "#FF0000" }}
-      whileTap={{ scale: 0.9 }}
-    >
-      <Icon size={23} className="text-gray-800" />
-    </motion.button>
-  </li>
-);
 const NavBar = ({ isParentFocused }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const navItems = [
+    { path: "/", icon: FaHome, label: "Home" },
+    { path: "/about", icon: FaUser, label: "About" },
+    { path: "/projects", icon: FaCode, label: "Projects" },
+    { path: "/skills", icon: FaBrain, label: "Skills" },
+  //  { path: "/contact", icon: FaEnvelope, label: "Contact" }, incomplete
+  ];
 
   useEffect(() => {
-    if (isParentFocused) {
-      setIsOpen(false);
-    }
-  }, [isParentFocused]);
+    setIsOpen(false);
+  }, [location]);
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const handleClick = (label) => {
-    console.log(`Navigating to ${label}`);
+  const variants = {
+    open: {
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      },
+    },
+    closed: {
+      x: "-100%",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      },
+    },
   };
 
   return (
-    <div
-      className="sticky top-5  z-50"
-    >
-      <div className="absolute w-[80%] sm:w-[50%] left-1/2 -translate-x-1/2 flex items-center justify-between h-10 lg:h-12  bg-white/50  rounded-xl shadow-md">
-        <div className="flex items-center justify-center ml-2">
-          <motion.button
-            onClick={() => handleClick("logo")}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <img
-              src="/static/logo/logo.png"
-              alt="Logo"
-              className="h-20 -ml-4 lg:h-24 object-center drop-shadow-2xl"
-            />
-          </motion.button>
-        </div>
-        <ul className="hidden sm:flex font-poppins justify-center gap-12 md:gap-16 items-center list-none px-12">
-          <IconButton Icon={FaHome} onClick={() => handleClick("Home")} />
-          <IconButton Icon={FaGithub} onClick={() => handleClick("Github")} />
-          <IconButton
-            Icon={RiContactsFill}
-            onClick={() => handleClick("Contact")}
-          />
-        </ul>
-        <div className="sm:hidden px-4">
-          <button onClick={toggleMenu} className="focus:outline-none">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+    <nav className="fixed top-0 left-0 w-full  z-50 bg-[#151515]/10 backdrop-blur-2xl border-b border-[#dc143c]/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+         
+          <Link to="/" className="flex items-center">
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#dc143c] to-[#ff4d6d] text-transparent bg-clip-text">
+              Y@$|R
+            </span>
+          </Link>
+
+        
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                  location.pathname === item.path
+                    ? "text-[#dc143c] bg-[#dc143c]/10"
+                    : "text-gray-300 hover:text-[#dc143c] hover:bg-[#dc143c]/10"
+                }`}
+              >
+                <item.icon className="text-lg" />
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </div>
+
+         
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-300 hover:text-[#dc143c] p-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
+              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
         </div>
       </div>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
-          className="absolute top-10 right-5 sm:hidden font-poppins text-black mx-4 p-6 mt-2 bg-white/50 rounded-3xl border-b border-gray-300 shadow-md"
-        >
-          <ul className="flex flex-col gap-2 items-center">
-            <li>
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => handleClick("Home")}
-              >
-                Home
-              </motion.button>
-            </li>
-            <li>
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => handleClick("Github")}
-              >
-                Github
-              </motion.button>
-            </li>
-            <li>
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => handleClick("Contect")}
-              >
-                Contect
-              </motion.button>
-            </li>
-          </ul>
-        </motion.div>
-      )}
-    </div>
+
+    
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={variants}
+            className="fixed inset-y-0 left-0 w-64 bg-[#151515] shadow-lg md:hidden"
+          >
+            <div className="flex flex-col h-full py-6 px-4">
+              <div className="flex items-center justify-between mb-8">
+                <span className="text-2xl font-bold bg-gradient-to-r from-[#dc143c] to-[#ff4d6d] text-transparent bg-clip-text">
+                  YA
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-300 hover:text-[#dc143c] p-2"
+                >
+                  <FaTimes size={24} />
+                </button>
+              </div>
+              <div className="flex flex-col space-y-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-colors ${
+                      location.pathname === item.path
+                        ? "text-[#dc143c] bg-[#dc143c]/10"
+                        : "text-gray-300 hover:text-[#dc143c] hover:bg-[#dc143c]/10"
+                    }`}
+                  >
+                    <item.icon className="text-lg" />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
-};  
+};
 
 export default NavBar;
